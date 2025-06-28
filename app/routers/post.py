@@ -4,7 +4,7 @@ from .. import models, schemas, utils
 from ..database import engine, SessionLocal, get_db
 from typing import List
 
-router=APIRouter(prefix="/posts")
+router=APIRouter(prefix="/posts", tags=['Posts'])
 
 @router.get("/", response_model=List[schemas.PostResponse])
 def get_post(db: Session = Depends(get_db)):
