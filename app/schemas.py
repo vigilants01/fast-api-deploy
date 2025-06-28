@@ -22,5 +22,6 @@ class UserCreate(BaseModel):
 class UserOut(BaseModel):
     id: int
     email: EmailStr
+    created_at: datetime
     class config:
         orm_mode: True
