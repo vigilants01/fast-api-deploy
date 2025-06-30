@@ -48,3 +48,11 @@ class TokenData(BaseModel):
 class Vote(BaseModel):
     post_id: int
     dir: conint(le=1)
+
+class PostOut(BaseModel):
+    Post: PostResponse
+    votes: int
+
+
+    class Config:
+        orm_mode = True
