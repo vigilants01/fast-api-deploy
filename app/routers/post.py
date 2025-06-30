@@ -2,15 +2,15 @@ from sqlalchemy.orm import Session
 from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
 from .. import models, schemas, utils, oauth2
 from ..database import engine, SessionLocal, get_db
-from typing import List
+from typing import List, Optional
 
 
 
 router=APIRouter(prefix="/posts", tags=['Posts'])
 
 @router.get("/", response_model=List[schemas.PostResponse])
-def get_post(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user), limit: int =10):
-    posts = db.query(models.Post).limit(limit).all()
+def get_post(db: Session = Depends(get_db), limit: int =10, skip: int = 0, search: Optional[str] = ""):
+    posts = db.query(models.Post).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
     # cursor.execute("""SELECT * FROM posts""")
     # posts=cursor.fetchall()
     return posts
